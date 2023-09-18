@@ -1,78 +1,59 @@
 $graph:
 
 - class: Workflow
-  doc: Applies s expressions to EO acquisitions
-  id: snuggs
-  requirements:
-  - class: ScatterFeatureRequirement
+  id: helloworld
   inputs:
-    input_reference:
-      doc: Input product reference
-      label: Input product reference
-      type: string[]
-    s_expression:
-      doc: s expression
-      label: s expression
-      type: string[]
-  label: s expressions
-  outputs:
-  - id: wf_outputs
-    outputSource:
-    - step_1/results
-    type:
-      Directory[]
+    message:
+      type: string
+      default: "Hello world"
+      inputBinding:
+        position: 1
+  outputs: []
 
   steps:
     step_1:
       in:
-        input_reference: input_reference
-        s_expression: s_expression
-      out:
-      - results
-      run: '#clt'
-      scatter: [input_reference, s_expression]
-      scatterMethod: flat_crossproduct
-
-
-- baseCommand: s-expression
+        message: message
+      run: '#ctl'
+  
+- baseCommand: echo
   class: CommandLineTool
-
-  id: clt
-
+  id: ctl
+  
   arguments:
-  - --input_reference
-  - valueFrom: $( inputs.input_reference )
-  - --s-expression
-  - valueFrom: ${ return inputs.s_expression.split(":")[1]; }
-  - --cbn
-  - valueFrom: ${ return inputs.s_expression.split(":")[0]; }
+  - --message
+  - valueFrom: $( inputs.message )
 
   inputs:
-    input_reference:
+    message:
       type: string
-    s_expression:
-      type: string
-
-  outputs:
-    results:
-      outputBinding:
-        glob: .
-      type: Directory
   requirements:
-    EnvVarRequirement:
-      envDef:
-        PATH: /srv/conda/envs/env_app_snuggs/bin:/srv/conda/bin:/srv/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     ResourceRequirement: {}
     InlineJavascriptRequirement: {}
-    DockerRequirement:
-      dockerPull: eoepca/snuggs:0.3.0
-  #stderr: std.err
-  #stdout: std.out
 
-cwlVersion: v1.0
+cwlVersion: v1.2
 
 $namespaces:
   s: https://schema.org/
 s:softwareVersion: 0.3.0
 schemas:
 - http://schema.org/version/9.0/schemaorg-current-http.rdf
+# cwlVersion: v1.2
+
+# # what type of CWL process we have in this document
+# class: CommandLineTool
+
+# # this commandLineTool executes the linux "echo" command-line tool
+# baseCommand: echo
+
+# # the input for this process
+# inputs:
+#   message:
+#     type: string
+#     default: "Hello world"
+#     # bind this message value as an argument to "echo"
+#     inputBinding:
+#       position: 1
+# outputs: []
+
+# # to run it: cwltool [OPTIONS] <cwl_document> [INPUTS_OBJECT]
