@@ -1,6 +1,7 @@
 $graph:
 
 - class: Workflow
+  doc: try asynchronus mode
   id: helloworld
   inputs:
     message:
