@@ -1,7 +1,7 @@
 $graph:
 
 - class: Workflow
-  doc: try asynchronus mode
+  doc: try asynchronus mode with busybox
   id: helloworld
   inputs:
     message:
@@ -17,7 +17,7 @@ $graph:
         message: message
       run: '#ctl'
   
-- baseCommand: touch helloworld-output
+- baseCommand: echo
   class: CommandLineTool
   id: ctl
   
