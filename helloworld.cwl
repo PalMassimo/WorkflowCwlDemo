@@ -17,7 +17,7 @@ $graph:
         message: message
       run: '#ctl'
   
-- baseCommand: echo &
+- baseCommand: touch helloworld-output
   class: CommandLineTool
   id: ctl
   
@@ -31,6 +31,8 @@ $graph:
   requirements:
     ResourceRequirement: {}
     InlineJavascriptRequirement: {}
+    DockerRequirement:
+      dockerPull: busybox
 
 cwlVersion: v1.2
 
