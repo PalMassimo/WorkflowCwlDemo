@@ -16,7 +16,7 @@ $graph:
         message: message
       run: '#ctl'
   
-- baseCommand: echo
+- baseCommand: echo &
   class: CommandLineTool
   id: ctl
   
